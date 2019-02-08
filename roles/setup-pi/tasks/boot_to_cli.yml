@@ -1,0 +1,12 @@
+---
+- name: Set to boot at CLI (1/2)
+  command: "systemctl set-default multi-user.target"
+
+- name: Set to boot at CLI (2/2)
+  file:
+    src: "/lib/systemd/system/getty@.service"
+    dest: "/etc/systemd/system/getty.target.wants/getty@tty1.service"
+    state: link
+    force: 1
+
+

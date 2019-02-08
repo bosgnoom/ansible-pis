@@ -1,0 +1,31 @@
+---
+# Alle common items hier
+- import_tasks: i2c.yml
+
+- import_tasks: setup_oled.yml
+    
+    
+- name: "check uptime"
+  command: /usr/bin/uptime
+  register: the_uptime
+
+- name: iets
+  debug:
+    var: the_uptime.stdout
+
+- name: "check temp"
+  command: cat /sys/class/thermal/thermal_zone0/temp
+  register: temp
+
+- name: "temperatuur"
+  debug:
+    var: temp.stdout
+
+
+
+  
+
+
+
+
+

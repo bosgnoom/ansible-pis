@@ -1,0 +1,33 @@
+---
+# Mapping van de mac-adressen van de raspberry pi's naar de hostnames / ip adressen
+
+mac_address_mapping:
+  "B8:27:EB:B9:D0:AD":
+    name: "node-pi3b-plus-p1" 
+    ip: "192.168.1.202"
+  "B8:27:EB:59:F7:3E":
+    name: "node-pi3b-p2" 
+    ip: "192.168.1.201"
+  "B8:27:EB:2C:37:25":
+    name: "node-pi3b-p1" 
+    ip: "192.168.1.200"
+  "B8:27:EB:B6:C8:FC":
+    name: "node-pi3b-n1" 
+    ip: "192.168.1.203"
+  "B8:27:EB:67:51:E6":
+    name: "node-pi2b-n1" 
+    ip: "192.168.1.204"
+  "B8:27:EB:46:BE:4A":
+    name: "node-pi1b-p1" 
+    ip: "192.168.1.205"
+
+node_password: "schouten"
+
+node_locale: "en_US.UTF-8 UTF-8"
+node_language: "en_US.UTF-8"
+
+
+
+
+
+

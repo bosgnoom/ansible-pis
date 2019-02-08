@@ -1,0 +1,8 @@
+---
+- name: Change CPU/GPU memory split
+  # config file: /boot/config.txt
+  lineinfile:
+    path: /boot/config.txt
+    regexp: "^gpu_mem="
+    line: "gpu_mem=16M"
+

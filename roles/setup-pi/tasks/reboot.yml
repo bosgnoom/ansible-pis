@@ -1,0 +1,20 @@
+---
+# Reboot host
+
+- name: 'Reboot'
+  shell: 'sleep 1 && shutdown -r now "Reboot triggered by Ansible" && sleep 1'
+  async: 1
+  poll: 0
+  become: true
+  ignore_errors: true
+
+# Look for node_hostname, as the host has now a new name/ip address
+- name: 'Wait for server to boot'
+  become: false
+  local_action:
+    module: wait_for
+      host={{ node_ip_address }}
+      port=22
+      delay=15
+      timeout=60
+

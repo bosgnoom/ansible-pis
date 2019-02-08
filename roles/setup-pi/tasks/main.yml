@@ -1,0 +1,51 @@
+---
+# In deze tasks file zitten de taken die bij het instellen van de node uitgevoerd moeten worden
+
+
+
+- include_vars: group_vars/vars.yml
+
+- name: 'Check target MAC address'
+  set_fact:
+    node_mac_address: '{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress|upper }}' 
+
+- name: 'Look up target hostname and ip address'
+  set_fact:
+    node_hostname: "{{ mac_address_mapping[node_mac_address].name }}"
+    node_ip_address: "{{ mac_address_mapping[node_mac_address].ip }}"
+
+- import_tasks: apt.yml
+
+- import_tasks: hostname.yml
+
+- import_tasks: change_password.yml
+
+- import_tasks: i2c.yml
+
+- import_tasks: mem_size.yml
+
+- import_tasks: timezone.yml
+
+- import_tasks: boot_to_cli.yml
+
+- import_tasks: setup_oled.yml
+
+
+- import_tasks: fixed_ip.yml
+
+
+- import_tasks: reboot.yml
+
+
+
+
+  
+  
+      
+
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+---
+# Set the hostname
+
+- name: 'Set hostname'
+  hostname:
+    name: '{{ node_hostname }}'
+
+
+- name: 'Change /etc/hostname'
+  command: 'echo {{ node_hostname }} > /etc/hostname'
+
+
+- name: 'Set hostname in /etc/hosts'
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^127\.0\.1\.1'
+    line: '127.0.1.1 {{ node_hostname }}'
+
+
+
+
