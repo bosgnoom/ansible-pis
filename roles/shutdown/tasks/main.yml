@@ -1,0 +1,16 @@
+---
+# Alle common items hier
+- name: "shutdown"
+  command: shutdown -h now
+  become: yes
+  async: 1
+
+
+
+
+  
+
+
+
+
+

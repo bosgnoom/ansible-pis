@@ -1,0 +1,11 @@
+---
+
+# Check which configured hosts are online
+- name: Shutdown all nodes
+  hosts: nodes
+  gather_facts: no
+  roles:
+    - shutdown
+
+
+
