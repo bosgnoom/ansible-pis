@@ -1,0 +1,20 @@
+---
+
+# Check which configured hosts are online
+- name: Check which nodes are online
+  hosts: nodes
+  gather_facts: no
+  tasks:
+    - command: ping -c1 {{ inventory_hostname }}
+      delegate_to: localhost
+      register: node_ping_result
+      ignore_errors: yes
+    - group_by: key=nodes_reachable
+      when: node_ping_result is success
+
+# Poll existing nodes
+- name: Poll data from nodes
+  hosts: nodes_reachable
+  roles:
+    - common
+
