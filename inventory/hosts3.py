@@ -3,15 +3,23 @@
 """
 	Find selected raspberry pi's 
 	- Freshly flashed or
-	- Already set as node in the cluster system
+	- Already set as node in the cluster
+	- Basically just a wrapper for arp-scan
 	
+		
 	Output:
 	- json style, for Ansible's hosts file
+	
+	
+	TODO:
+	- use python json system, or YAML
+	- this just mimicks json, which is bad. very bad indeed.
 	
 """
 
 import yaml
 import subprocess
+
 
 # Load mac / pi mapping
 with open("group_vars/vars.yml", 'r') as stream:
@@ -70,12 +78,6 @@ inventory = { "defaultdevices": defaultdevices,
 
 # Print json, to be used as input for ansible-playbook                           
 print(inventory)
-
-
-
-    
-
-
 
 
 

@@ -1,8 +1,8 @@
 ---
 
-# Check which configured hosts are online
-- name: Check which nodes are online
-  hosts: nodes
+# Check which hosts are online
+- name: Check which unconfigured devices are online
+  hosts: defaultdevices
   gather_facts: no
   tasks:
     - command: ping -c1 {{ inventory_hostname }}
@@ -12,9 +12,15 @@
     - group_by: key=nodes_reachable
       when: node_ping_result is success
 
-# Poll existing nodes
-- name: Poll data from nodes
-  hosts: nodes_reachable
-  roles:
-    - common
+
+- name: Check which configured devices are online
+  hosts: nodes
+  gather_facts: no
+  tasks:
+    - command: ping -c1 {{ inventory_hostname }}
+      delegate_to: localhost
+      register: node_ping_result
+      ignore_errors: yes
+    - group_by: key=nodes_reachable
+      when: node_ping_result is success
 
