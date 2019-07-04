@@ -1,5 +1,5 @@
 ---
-# Alle common items hier
+# Shut down all of the raspberry pi's
 - name: "shutdown"
   command: shutdown -h now
   become: yes

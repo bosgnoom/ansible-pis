@@ -5,50 +5,17 @@
 #                  - node --> naar wat nodig is
 #
 
-# First, check if there's a "raspberrypi.local" online
-- name: "Check if new hosts are online (raspberrypi)"
-  hosts: defaultdevices
-  gather_facts: no
-  tasks:
-    - command: ping -c1 {{ inventory_hostname }}
-      delegate_to: localhost
-      register: ping_result
-      ignore_errors: yes
-    - group_by: key=reachable
-      when: ping_result is success
-
-- name: "Remove raspberrypi.local ssh keys"
-  hosts: localhost
-  connection: local
-  tasks:
-    - command: ssh-keygen -f "~/.ssh/known_hosts" -R "raspberrypi.local"
+#- name: "Remove raspberrypi.local ssh keys"
+#  hosts: localhost
+#  connection: local
+#  tasks:
+#    - command: ssh-keygen -f "~/.ssh/known_hosts" -R "raspberrypi.local"
 
 # Apply roles to the found raspberry pi('s)
 - name: Set up freshly flashed devices
-  hosts: reachable
+  hosts: defaultdevices
   become: yes
   roles: 
     - setup-pi
-    - common
-
-# Check which configured hosts are online
-- name: Check which nodes are online
-  hosts: nodes
-  gather_facts: no
-  tasks:
-    - command: ping -c1 {{ inventory_hostname }}
-      delegate_to: localhost
-      register: node_ping_result
-      ignore_errors: yes
-    - group_by: key=nodes_reachable
-      when: node_ping_result is success
-
-# Poll existing nodes
-- name: Poll data from nodes
-  hosts: nodes_reachable
-  roles:
-    - common
-
-
-
-
+    
+    

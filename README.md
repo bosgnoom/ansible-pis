@@ -36,7 +36,41 @@ this will be described some other time...
 
 
 ## Ansible
-
+Ansible will be used for:
+- Set up the raspberry pi:
+  - Install packages often used by me:
+    - mc
+    - python-pexpect (needed for...)
+    - screen
+    - build-essential
+    - git
+  - Boot the pi to CLI
+  - Change the default password
+  - Deploy the ssh key (login without password)
+  - Set up networking: Will be based on the mac_address mapping (mac --> ip address)
+    - dhcpcd.conf (for static ip address)
+    - set hostname (/etc/hostname)
+    - set hosts (/etc/hosts)
+    - set dns nameserver (/etc/resolv.conf)
+  - Change the GPU memory size to minimum (16MB)
+  - Set the timezone
+  
+- Set up the OLED display:
+  - Enable i2c (for the OLED display)
+  - Install needed packages (apt)
+    - python-dev
+    - python-pip
+    - python-imaging
+    - python-smbus
+  - Install needed python packages (pip)
+    - RPI.GPIO
+  - Install Adafruit's SSD1306 python driver
+  - Show the catz
+  
+- Prepare for kubernetes:
+  - cgroup
+  - disable swap
+  
 
 ### Install Ansible
 Currently the Ansible playbooks are developed in Ubuntu 19.04, running in a 

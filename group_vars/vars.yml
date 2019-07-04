@@ -20,11 +20,11 @@ mac_address_mapping:
   "B8:27:EB:67:51:E6":
     name: "node-pi2b-n1" 
     ip: "192.168.1.204"
-  "B8:27:EB:46:BE:4A":
-    name: "node-pi1b-p1" 
-    ip: "192.168.1.205"
 
+
+# Will be replaced into ansible-secret
 node_password: "schouten"
+
 
 node_locale: "en_US.UTF-8 UTF-8"
 node_language: "en_US.UTF-8"
