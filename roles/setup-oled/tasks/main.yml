@@ -28,12 +28,17 @@
     packages: 
     - python-pip
     - python-setuptools
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6-dev
+    - python-smbus
     
     
 # Following https://github.com/adafruit/Adafruit_Python_SSD1306
 - name: Installing pip modules
   pip:
-    name: pip, setuptools, wheel
+    name: pip, setuptools, wheel, pillow
     extra_args: "--upgrade" 
 
 
@@ -41,12 +46,14 @@
   git:
     repo: "https://github.com/adafruit/Adafruit_Python_SSD1306.git" 
     dest: "~/Adafruit_Python_SSD1306"
+  become: yes
+  become_user: pi  
 
    
 - name: "Run setup.py"
-  command: python /home/pi/Adafruit_Python_SSD1306/setup.py install
+  command: chdir=/home/pi/Adafruit_Python_SSD1306 python setup.py install
   become: yes
-
+  
     
 - name: "Test run OLED"
   command: chdir=/home/pi/Adafruit_Python_SSD1306/examples python image.py

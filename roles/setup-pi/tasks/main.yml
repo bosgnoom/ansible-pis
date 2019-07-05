@@ -32,6 +32,7 @@
     - screen
     - build-essential
     - git
+    - aptitude
     
     
 # Change password
