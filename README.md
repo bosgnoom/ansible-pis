@@ -40,7 +40,7 @@ Ansible will be used for:
 - Set up the raspberry pi:
   - Install packages often used by me:
     - mc
-    - python-pexpect (needed for...)
+    - python-pexpect (needed to change the password via Ansible)
     - screen
     - build-essential
     - git
@@ -92,7 +92,8 @@ want to learn Ansible without running with root permissions, I am aggregating
 inventory sources with a directory, as described [here](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#using-multiple-inventory-sources)
 
 To find which Raspberry Pi is online, a python script parses the output of
-`arp-scan`. The result is returned in json. 
+`arp-scan`. The result is returned in json. This script will have to be rewritten,
+but it works for now...
 
 
 ### Ansible playbook development

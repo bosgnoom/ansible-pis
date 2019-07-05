@@ -18,4 +18,13 @@
   roles: 
     - setup-pi
     
+
+- name: Set up OLED display
+  hosts: all
+  become: yes
+  roles:
+    - setup-oled
+    
+    
+    
     

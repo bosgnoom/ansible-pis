@@ -1,0 +1,56 @@
+---
+# Set up the 0.91" OLED display
+# This is connected through i2c
+# and supported by Adafruit's ssd1306 package
+
+
+- name: Activate I2C in config.txt
+  lineinfile:
+    path: /boot/config.txt
+    regexp: "dtparam=i2c_arm"
+    line: "dtparam=i2c_arm=on"
+  become: yes
+
+    
+- name: Activate I2C in /etc/modules
+  lineinfile:
+    path: /etc/modules
+    line: "i2c-dev"
+  become: yes  
+  
+
+- name: Install needed packages
+  apt: 
+    update_cache: yes
+    cache_valid_time: 3600
+    name: "{{ packages }}"
+  vars:
+    packages: 
+    - python-pip
+    - python-setuptools
+    
+    
+# Following https://github.com/adafruit/Adafruit_Python_SSD1306
+- name: Installing pip modules
+  pip:
+    name: pip, setuptools, wheel
+    extra_args: "--upgrade" 
+
+
+- name: Cloning Adafruit_Python_SSD1306
+  git:
+    repo: "https://github.com/adafruit/Adafruit_Python_SSD1306.git" 
+    dest: "~/Adafruit_Python_SSD1306"
+
+   
+- name: "Run setup.py"
+  command: python /home/pi/Adafruit_Python_SSD1306/setup.py install
+  become: yes
+
+    
+- name: "Test run OLED"
+  command: chdir=/home/pi/Adafruit_Python_SSD1306/examples python image.py
+  #become: yes
+    
+    
+ 

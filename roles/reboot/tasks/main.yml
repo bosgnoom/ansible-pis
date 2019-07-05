@@ -1,0 +1,16 @@
+---
+# Shut down all of the raspberry pi's
+- name: "Reboot"
+  command: shutdown -r now
+  become: yes
+  async: 1
+
+
+
+
+  
+
+
+
+
+
