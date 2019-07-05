@@ -1,0 +1,19 @@
+---
+# Run updates
+
+- name: Update apt repositories cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 600
+    
+- name: Upgrade apt to latest packages
+  apt:
+    upgrade: safe
+
+- name: Autoremove unused packages
+  apt:
+    autoremove: yes
+    
+- name: Autoclean
+  apt:
+    autoclean: yes    

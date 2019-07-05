@@ -1,0 +1,9 @@
+---
+# Update each raspberry pi (sudo apt update && sudo apt upgrade)
+
+- name: Running updates
+  hosts: all
+  become: yes
+  roles:
+    - update-rpis
+
