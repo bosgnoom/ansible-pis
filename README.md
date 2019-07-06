@@ -16,6 +16,9 @@ Hints for myself:
 
 
 ## Git 
+
+
+### Multiple repositories
 At the moment I am using both my local git (running on my Synology NAS) and
 my github account to store this work. Git can push to different servers as
 described [here](https://gist.github.com/rvl/c3f156e117e22a25f242). Please 
@@ -29,6 +32,12 @@ git remote set-url --add --push origin git@bitbucket.org:ccgmurdoch/my-project.g
 
 I ended up editing the `.git/config` file to match my local ssh url.
 
+
+### Git to remember
+- `git status`: Shows which files are changed/untracked
+- `git add .`: Will add all untracked files
+- `git commit -a -m <message>`: Commit changes
+- `git push`: "Save" repository to remote server(s)
 
 ## Generate SSH key
 To be deployed to all of the Raspberry Pi's. As my ssh key is already in place,
