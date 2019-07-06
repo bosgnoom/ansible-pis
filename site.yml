@@ -1,15 +1,4 @@
 ---
-# In dit playbook worden de raspberry pi's geconfigureerd
-#
-# In twee stappen: - nieuw device --> node
-#                  - node --> naar wat nodig is
-#
-
-#- name: "Remove raspberrypi.local ssh keys"
-#  hosts: localhost
-#  connection: local
-#  tasks:
-#    - command: ssh-keygen -f "~/.ssh/known_hosts" -R "raspberrypi.local"
 
 # Apply roles to the found raspberry pi('s)
 - name: Set up freshly flashed devices
@@ -17,14 +6,8 @@
   become: yes
   roles: 
     - setup-pi
-    
-
-- name: Set up OLED display
-  hosts: all
-  become: yes
-  roles:
     - setup-oled
+    - check-reboot
     
-    
-    
+        
     

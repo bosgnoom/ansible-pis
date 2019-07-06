@@ -40,7 +40,6 @@ Ansible will be used for:
 - Set up the raspberry pi:
   - Install packages often used by me:
     - mc
-    - python-pexpect (needed to change the password via Ansible)
     - screen
     - build-essential
     - git
@@ -54,7 +53,6 @@ Ansible will be used for:
     - set dns nameserver (/etc/resolv.conf)
   - Change the GPU memory size to minimum (16MB)
   - Set the timezone
-  
 - Set up the OLED display:
   - Enable i2c (for the OLED display)
   - Install needed packages (apt)
@@ -66,11 +64,11 @@ Ansible will be used for:
     - RPI.GPIO
   - Install Adafruit's SSD1306 python driver
   - Show the catz
-  
 - Prepare for kubernetes:
   - cgroup
   - disable swap
-  
+  - ...to be determined...
+
 
 ### Install Ansible
 Currently the Ansible playbooks are developed in Ubuntu 19.04, running in a 
@@ -96,12 +94,21 @@ To find which Raspberry Pi is online, a python script parses the output of
 but it works for now...
 
 
-### Ansible playbook development
-
-
 ### Run Ansible
-`ansible-playbook -i inventory poll.yml` to find hosts online
+Run Ansible by: `ansible-playbook -i inventory playbook.yml`. Different playbooks
+are developed:
+- site.yml: main playbook. Will convert a new device to node.
+- poll.yml: to check which node is online
+- reboot.yml: reboots all nodes
+- shutdown.yml: shuts all nodes down
+- update.yml: run apt-get upgrade for all nodes
 
 
-
+## TODO
+- Develop a python3 script to show node info on OLED
+  - Like... ip address, cpu usage, mem stat, ...
+- Start with installing kubernetes
+  - At the moment Rancher's k3s is my first to test
+  - Check [this out](https://github.com/rancher/k3s)
+  
 

@@ -1,0 +1,21 @@
+---
+# Check if the node needs a reboot. 
+- name: "Checking for /var/run/reboot-required"
+  stat:
+    path: /var/run/reboot-required
+  register: reboot_needed
+  
+
+- name: "Rebooting node if needed"
+  reboot:
+    reboot_timeout: 300
+  when:
+    reboot_needed.stat.exists
+
+
+  
+
+
+
+
+

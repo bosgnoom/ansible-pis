@@ -6,4 +6,7 @@
   become: yes
   roles:
     - update-rpis
+    - check-reboot
+    
+    
 
