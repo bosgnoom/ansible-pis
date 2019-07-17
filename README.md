@@ -38,6 +38,8 @@ I ended up editing the `.git/config` file to match my local ssh url.
 - `git add .`: Will add all untracked files
 - `git commit -a -m <message>`: Commit changes
 - `git push`: "Save" repository to remote server(s)
+- `git init`: Make a git repository in the currect directory
+
 
 ## Generate SSH key
 To be deployed to all of the Raspberry Pi's. As my ssh key is already in place,
@@ -99,8 +101,7 @@ want to learn Ansible without running with root permissions, I am aggregating
 inventory sources with a directory, as described [here](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#using-multiple-inventory-sources)
 
 To find which Raspberry Pi is online, a python script parses the output of
-`arp-scan`. The result is returned in json. This script will have to be rewritten,
-but it works for now...
+`arp-scan` and combines the information found in group\_vars and mac\_address\_mapping.
 
 
 ### Run Ansible

@@ -1,12 +1,10 @@
 ---
 # Update each raspberry pi (sudo apt update && sudo apt upgrade)
+# 
 
-- name: Running updates
-  hosts: all
+- name: Run updates on all nodes
+  hosts: node_master, node_clients
   become: yes
   roles:
     - update-rpis
     - check-reboot
-    
-    
-
