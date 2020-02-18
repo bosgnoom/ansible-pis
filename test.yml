@@ -1,0 +1,26 @@
+# Testing...
+
+# Goal:
+# - Determine which RPI's are online.
+# - Check if they're freshly flashed (new image)
+# - If not, check which one is the master
+# -         The rest are nodes
+
+- name: Check hosts
+  hosts: localhost
+  gather_facts: no
+  roles:
+    - check_hosts
+
+- name: Ping defaultdevices
+  hosts: defaultdevices
+
+- name: Ping master
+  hosts: master
+
+- name: Ping nodes
+  hosts: nodes
+
+
+  
+
