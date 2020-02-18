@@ -18,6 +18,7 @@ mac_address_mapping:
 node_password: "schouten"
 
 
+# Set the default locale and language
 node_locale: "en_US.UTF-8 UTF-8"
 node_language: "en_US.UTF-8"
 

@@ -29,9 +29,9 @@ require dhcp_server_identifier
 slaac private
 
 # Now here the static IP configuration:
-interface eth0
+interface wlan0
 
 static ip_address={{ node_ip_address }}/24
-static routers=192.168.1.1
-static domain_name_servers=192.168.1.1
+static routers=192.168.178.1
+static domain_name_servers=192.168.178.1
 

@@ -1,8 +1,29 @@
 ---
 
+# Goal:
+# - Determine which RPI's are online.
+# - Check if they're freshly flashed (new image)
+# - If not, check which one is the master
+# -         The rest are nodes
+
+
+- name: Finding hosts
+  hosts: localhost
+  gather_facts: no
+  roles:
+    - find_hosts
+
+
+# Now we have three groups:
+#  - defaultdevices
+#  - master
+#  - nodes 
+
+
 # Apply roles to the found raspberry pi('s)
 - name: Set up freshly flashed devices
   hosts: defaultdevices
+  #gather_facts: no
   become: yes
   roles: 
     - setup-pi
