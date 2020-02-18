@@ -39,7 +39,7 @@ local_site = [i.split('\t') for i in hosts.split('\n') if
 # defaultdevices: "fresh" raspberry pi's, with dhcp ip address and 
 #                  default login credentials
 # nodes: already set-up devices, with static ip's equal to setting
-#    node-master: 192.168.1.200 
+#    node-master: 192.168.178.200 
 #    nodes-clients: all others
 defaultdevices = []
 defaultdevices_vars = { "ansible_ssh_user": "pi",

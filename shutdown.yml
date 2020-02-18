@@ -2,7 +2,7 @@
 
 # Check which configured hosts are online
 - name: Shutdown all nodes
-  hosts: nodes
+  hosts: all
   gather_facts: no
   roles:
     - shutdown

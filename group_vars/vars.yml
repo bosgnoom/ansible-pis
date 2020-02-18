@@ -4,22 +4,14 @@
 
 # Next to that, also the default node locale and language is configured here
 
+
 mac_address_mapping:
-  "B8:27:EB:2C:37:25":
-    name: "node-master" 
-    ip: "192.168.1.200"
-  "B8:27:EB:B9:D0:AD":
-    name: "node-pi3b-plus-p1" 
-    ip: "192.168.1.202"
-  "B8:27:EB:59:F7:3E":
-    name: "node-pi3b-p1" 
-    ip: "192.168.1.201"
-  "B8:27:EB:B6:C8:FC":
-    name: "node-pi3b-n1" 
-    ip: "192.168.1.203"
-  "B8:27:EB:67:51:E6":
-    name: "node-pi2b-n1" 
-    ip: "192.168.1.204"
+  "B8:27:EB:EC:85:F8":
+    name: "master"
+    ip: "192.168.178.200"
+  "B8:27:EB:0C:A2:6B":
+    name: "node1"
+    ip: "192.168.178.201"
 
 
 # Will be replaced into ansible-secret
