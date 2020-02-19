@@ -1,11 +1,23 @@
 ---
 
-# Check which configured hosts are online
+# Goal:
+# - Shutdown all RPi's
+
+
+- name: Finding hosts
+  hosts: localhost
+  gather_facts: no
+  roles:
+    - find_hosts
+
+
+# Shutdown all nodes
 - name: Shutdown all nodes
   hosts: all
   gather_facts: no
   roles:
     - shutdown
+  ignore_errors: yes
 
 
 

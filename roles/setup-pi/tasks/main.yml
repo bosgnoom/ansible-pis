@@ -13,10 +13,11 @@
     node_mac_address: '{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress|upper }}' 
 
 
-- name: Look up target hostname and ip address
+- name: Look up target hostname, network interface and ip address
   set_fact:
     node_hostname: "{{ mac_address_mapping[node_mac_address].name }}"
     node_ip_address: "{{ mac_address_mapping[node_mac_address].ip }}"
+    node_iface: "{{ mac_address_mapping[node_mac_address].iface }}"
 
 
 # Now set up the node
@@ -38,21 +39,20 @@
     
     
 # Change password
-# Deploy SSH key to log in without password
 - name: Change password
   expect:
     command: passwd pi
     responses:
       (?i)password: "{{ node_password }}"
 
-
+# Deploy SSH key to log in without password
 - name: Deploy SSH key
   authorized_key: user=pi
                   key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
                   state=present
        
 
-# Normally via raspi-config:
+# Change settings (normally via raspi-config):
 # - GPU memory
 - name: Change CPU/GPU memory split
   lineinfile:

@@ -23,12 +23,18 @@
 # Apply roles to the found raspberry pi('s)
 - name: Set up freshly flashed devices
   hosts: defaultdevices
-  #gather_facts: no
   become: yes
   roles: 
     - setup-pi
+
+- name: Set up OLED display
+  hosts: 
+    - master
+    - nodes
+  become: yes
+  roles:
     - setup-oled
-    - check-reboot
+
     
         
     

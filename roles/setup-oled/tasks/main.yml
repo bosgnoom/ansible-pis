@@ -34,7 +34,13 @@
     - libfreetype6-dev
     - python-smbus
     
-    
+
+# Reboot (to activate i2c)
+- name: Reboot
+  reboot:
+    reboot_timeout: 300
+
+
 # Following https://github.com/adafruit/Adafruit_Python_SSD1306
 - name: Installing pip modules
   pip:

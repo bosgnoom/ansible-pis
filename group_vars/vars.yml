@@ -9,9 +9,15 @@ mac_address_mapping:
   "B8:27:EB:EC:85:F8":
     name: "master"
     ip: "192.168.178.200"
+    iface: wlan0
   "B8:27:EB:0C:A2:6B":
     name: "node1"
     ip: "192.168.178.201"
+    iface: wlan0
+
+# Network setup
+dhcpcd_routers: 192.168.178.1
+dhcpcd_domain_name_servers: 192.168.178.1
 
 
 # Will be replaced into ansible-secret
