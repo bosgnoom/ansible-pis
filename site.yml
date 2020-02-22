@@ -29,8 +29,9 @@
 
 - name: Set up OLED display
   hosts: 
-    - master
-    - nodes
+    #- master
+    #- nodes
+    192.168.178.203
   become: yes
   roles:
     - setup-oled

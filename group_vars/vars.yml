@@ -9,10 +9,31 @@ mac_address_mapping:
   "B8:27:EB:EC:85:F8":
     name: "master"
     ip: "192.168.178.200"
+    ip_2: "10.0.0.200"
     iface: wlan0
+
   "B8:27:EB:0C:A2:6B":
     name: "node1"
     ip: "192.168.178.201"
+    ip_2: "10.0.0.201"
+    iface: wlan0
+
+  "B8:27:EB:79:62:70":
+    name: "node2"
+    ip: "192.168.178.202"
+    ip_2: "10.0.0.202"
+    iface: wlan0
+
+  "B8:27:EB:E3:9D:A9":
+    name: "node3"
+    ip: "192.168.178.203"
+    ip_2: "10.0.0.203"
+    iface: wlan0
+
+  "A0:F3:C1:08:DC:94":
+    name: "node4"
+    ip: "192.168.178.204"
+    ip_2: "10.0.0.204"
     iface: wlan0
 
 # Network setup

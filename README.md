@@ -26,8 +26,8 @@ remind the next time to create an empty repository on github, otherwise git
 will complain.
 
 ```
-git remote set-url --add --push origin git@github.com:muccg/my-project.git
-git remote set-url --add --push origin git@bitbucket.org:ccgmurdoch/my-project.git
+git remote set-url --add --push origin git@github.com:xxx/my-project.git
+git remote set-url --add --push origin git@bitbucket.org:yyy/my-project.git
 ```
 
 I ended up editing the `.git/config` file to match my local ssh url.
@@ -48,7 +48,7 @@ this will be described some other time...
 
 ## Ansible
 Ansible will be used for:
-- Set up the raspberry pi:
+[x] Set up the raspberry pi:
   - Install packages often used by me:
     - mc
     - screen
@@ -64,7 +64,7 @@ Ansible will be used for:
     - set dns nameserver (/etc/resolv.conf)
   - Change the GPU memory size to minimum (16MB)
   - Set the timezone
-- Set up the OLED display:
+[x] Set up the OLED display:
   - Enable i2c (for the OLED display)
   - Install needed packages (apt)
     - python-dev
@@ -75,7 +75,7 @@ Ansible will be used for:
     - RPI.GPIO
   - Install Adafruit's SSD1306 python driver
   - Show the catz
-- Prepare for kubernetes:
+[-] Prepare for kubernetes:
   - cgroup
   - disable swap
   - ...to be determined...

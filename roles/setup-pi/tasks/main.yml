@@ -17,6 +17,7 @@
   set_fact:
     node_hostname: "{{ mac_address_mapping[node_mac_address].name }}"
     node_ip_address: "{{ mac_address_mapping[node_mac_address].ip }}"
+    node_ip_address_2: "{{ mac_address_mapping[node_mac_address].ip_2 }}"
     node_iface: "{{ mac_address_mapping[node_mac_address].iface }}"
 
 
@@ -29,9 +30,9 @@
     name: "{{ packages }}"
   vars:
     packages: 
+    - python-apt
     - mc
     - python-pexpect  # Needed to change node password
-    - python-apt
     - screen
     - build-essential
     - git
