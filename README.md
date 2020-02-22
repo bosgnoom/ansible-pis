@@ -75,7 +75,7 @@ Ansible will be used for:
     - RPI.GPIO
   - Install Adafruit's SSD1306 python driver
   - Show the catz
-- [-] Prepare for kubernetes:
+- [ ] Prepare for kubernetes:
   - cgroup
   - disable swap
   - ...to be determined...
@@ -97,27 +97,23 @@ $ sudo apt install ansible
 
 ### Ansible inventory
 As default, Ansible uses `/etc/ansible` for configuring the hosts/nodes. As I
-want to learn Ansible without running with root permissions, I am aggregating
-inventory sources with a directory, as described [here](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#using-multiple-inventory-sources)
-
-To find which Raspberry Pi is online, a python script parses the output of
-`arp-scan` and combines the information found in group\_vars and mac\_address\_mapping.
+want to learn Ansible without running with root permissions, I have developed a
+playbook which determines the hosts by their mac address. Running `nmap -sP` fills
+the arp table, which can be used by an user to lookup mac address to ip address. 
 
 
 ### Run Ansible
-Run Ansible by: `ansible-playbook -i inventory playbook.yml`. Different playbooks
+Run Ansible by: `ansible-playbook playbook.yml`. Different playbooks
 are developed:
 - site.yml: main playbook. Will convert a new device to node.
-- poll.yml: to check which node is online
-- reboot.yml: reboots all nodes
 - shutdown.yml: shuts all nodes down
-- update.yml: run apt-get upgrade for all nodes
 
 
 ## TODO
-- Develop a python3 script to show node info on OLED
+- [ ] Develop a python3 script to show node info on OLED
   - Like... ip address, cpu usage, mem stat, ...
-- Start with installing kubernetes
+  - Start with "stats.py" on boot...
+- [ ] Start with installing kubernetes
   - At the moment Rancher's k3s is my first to test
   - Check [this out](https://github.com/rancher/k3s)
   
