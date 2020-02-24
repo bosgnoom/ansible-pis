@@ -1,0 +1,83 @@
+---
+
+# Install docker
+# https://docs.docker.com/install/linux/docker-ce/debian/
+
+# First, disable swap
+- name: Disabling swap
+  shell: >
+      dphys-swapfile swapoff &&
+      dphys-swapfile uninstall &&
+      update-rc.d -f dphys-swapfile remove
+  when:
+    - ansible_swaptotal_mb > 0
+
+
+- name: Removing dphys-swapfile
+  apt:
+    pkg: dphys-swapfile
+    state: absent
+
+
+- name: Removing old versions of docker (if any)
+  apt:
+    name:
+      - docker 
+      - docker-engine 
+      - docker.io 
+      - containerd 
+      - runc
+    state: absent
+
+
+- name: Installing dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - gnupg2
+    state: present
+
+
+- name: Add Docker apt key
+  apt_key:
+    url: https://download.docker.com/linux/raspbian/gpg
+    state: present
+  register: add_repository_key
+  #ignore_errors: true
+
+
+- name: Add Docker apt key (alternative for older systems without SNI)
+  shell: |
+    set -o pipefail
+    curl -sSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+  args:
+    warn: false
+  when: add_repository_key is failed
+
+
+- name: Add Docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/raspbian/ buster stable
+    state: present
+    update_cache: true
+
+
+- name: Install Docker
+  shell: curl -sSL https://get.docker.com | sudo bash
+    
+
+- name: Ensure Docker is started and enabled at boot.
+  service:
+    name: docker
+    state: enabled
+    enabled: true
+
+
+- name: Adding user pi to the docker group.
+  user:
+    name: pi
+    groups: docker
+    append: true

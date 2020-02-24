@@ -78,6 +78,7 @@ Ansible will be used for:
 - [ ] Prepare for kubernetes:
   - cgroup
   - disable swap
+  - install docker
   - ...to be determined...
 
 

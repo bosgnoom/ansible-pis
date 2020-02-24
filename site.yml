@@ -26,15 +26,25 @@
   become: yes
   roles: 
     - setup-pi
+  ignore_errors: true
+
 
 - name: Set up OLED display
-  hosts: 
+  hosts: defaultdevices
     #- master
     #- nodes
-    192.168.178.203
   become: yes
   roles:
     - setup-oled
+
+
+- name: Install Docker
+  hosts:
+    - master
+  become: yes
+  roles:
+    - install-docker
+
 
     
         
