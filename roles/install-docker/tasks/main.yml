@@ -3,6 +3,7 @@
 # Install docker
 # https://docs.docker.com/install/linux/docker-ce/debian/
 
+
 # First, disable swap
 - name: Disabling swap
   shell: >
@@ -19,7 +20,8 @@
     state: absent
 
 
-- name: Removing old versions of docker (if any)
+# Remove legacy versions of docker
+- name: Removing legacy versions of docker (if any)
   apt:
     name:
       - docker 
@@ -30,6 +32,7 @@
     state: absent
 
 
+# Install dependencies
 - name: Installing dependencies
   apt:
     name:
@@ -41,7 +44,8 @@
     state: present
 
 
-- name: Add Docker apt key
+# Set apt for docker
+- name: Adding docker apt key
   apt_key:
     url: https://download.docker.com/linux/raspbian/gpg
     state: present
@@ -49,34 +53,36 @@
   #ignore_errors: true
 
 
-- name: Add Docker apt key (alternative for older systems without SNI)
-  shell: |
-    set -o pipefail
-    curl -sSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-  args:
-    warn: false
-  when: add_repository_key is failed
-
-
-- name: Add Docker repository
+- name: Adding docker repository
   apt_repository:
     repo: deb https://download.docker.com/linux/raspbian/ buster stable
     state: present
     update_cache: true
 
-# Consider the get_url or uri module
-- name: Install Docker
+
+# Check if docker is installed
+- name: Checking for docker
+  stat:
+    path: /usr/bin/docker
+  register: docker_installed
+
+
+# Install docker if not yet installed
+- name: Installling docker
   shell: curl -sSL https://get.docker.com | sudo bash
+  args:
+    warn: false
+  when: docker_installed.stat.exists == false
     
 
-- name: Ensure Docker is started and enabled at boot.
+- name: Setting docker to start at boot
   service:
     name: docker
     state: started
     enabled: yes
 
 
-- name: Adding user pi to the docker group.
+- name: Adding user pi to the docker group
   user:
     name: pi
     groups: docker

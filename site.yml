@@ -41,6 +41,7 @@
 - name: Install Docker
   hosts:
     - master
+    - nodes
   become: yes
   roles:
     - install-docker
