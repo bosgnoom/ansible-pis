@@ -64,7 +64,7 @@
     state: present
     update_cache: true
 
-
+# Consider the get_url or uri module
 - name: Install Docker
   shell: curl -sSL https://get.docker.com | sudo bash
     
@@ -72,8 +72,8 @@
 - name: Ensure Docker is started and enabled at boot.
   service:
     name: docker
-    state: enabled
-    enabled: true
+    state: started
+    enabled: yes
 
 
 - name: Adding user pi to the docker group.
