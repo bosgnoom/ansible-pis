@@ -69,7 +69,7 @@
 
 # Install docker if not yet installed
 - name: Installling docker
-  shell: curl -sSL https://get.docker.com | sudo bash
+  shell: curl -sSL https://get.docker.com | sudo sh
   args:
     warn: false
   when: docker_installed.stat.exists == false

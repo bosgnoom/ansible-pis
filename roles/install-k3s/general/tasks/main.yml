@@ -1,0 +1,55 @@
+---
+# Install k3s
+# General tasks, for both master and nodes
+
+# Info:
+#   https://rancher.com/docs/k3s/latest/en/quick-start/
+#   https://github.com/rancher/k3s/blob/master/README.md
+#   https://github.com/rancher/k3s/blob/master/contrib/ansible/
+
+# Include variables (needed?)
+- include_vars: group_vars/vars.yml
+
+
+- name: Enable IPv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+    reload: yes
+
+
+- name: Enable IPv6 forwarding
+  sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: "1"
+    state: present
+    reload: yes
+
+
+- name: Activating cgroup on Raspbian
+  lineinfile:
+    path: /boot/cmdline.txt
+    regexp: '^(.*rootwait)$'
+    line: '\1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory'
+    backrefs: true
+  when: ( cmdline.stat.path is defined )
+  register: boot_cmdline
+
+
+- name: Rebooting if needed
+  reboot:
+  ignore_errors: true
+  when: ( boot_cmdline.changed )
+
+
+- name: Delete k3s if already present
+  file:
+    path: /usr/local/bin/k3s
+    state: absent
+  when: install_k3s is defined
+
+
+
+
+

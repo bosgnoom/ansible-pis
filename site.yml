@@ -30,21 +30,41 @@
 
 
 - name: Set up OLED display
-  hosts: defaultdevices
-    #- master
-    #- nodes
+  hosts: #defaultdevices
+    - master
+    - nodes
   become: yes
   roles:
     - setup-oled
 
 
 - name: Install Docker
-  hosts:
+  hosts: #defaultdevices
     - master
     - nodes
   become: yes
   roles:
     - install-docker
+
+
+- name: Install k3s on master
+  hosts: 
+    - master
+  become: yes
+  roles:
+    - install-k3s/general
+    - install-k3s/master
+
+
+- name: Install k3s on nodes
+  hosts: 
+    - nodes
+  become: yes
+  roles:
+    - install-k3s/general
+    - install-k3s/node
+  vars:
+    install_k3s: true
 
 
     

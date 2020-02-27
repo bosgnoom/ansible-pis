@@ -36,6 +36,10 @@ mac_address_mapping:
     ip_2: "10.0.0.204"
     iface: wlan0
 
+# k3s settings
+master_ip: 10.0.0.200
+
+
 # Network setup
 dhcpcd_routers: 192.168.178.1
 dhcpcd_domain_name_servers: 192.168.178.1

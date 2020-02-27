@@ -1,0 +1,13 @@
+---
+# Install k3s on nodes
+
+# Node has the same install, with the addition of:
+# - K3S_URL="https://{{ master_ip }}:6443"
+# - K3S_TOKEN="{{ token }}"
+
+- name: Installing k3s
+  shell: >
+    curl -sfL https://get.k3s.io | 
+    K3S_URL="https://{{ master_ip }}:6443" 
+    K3S_TOKEN="{{ token }}" sh -
+  when: install_k3s is defined
