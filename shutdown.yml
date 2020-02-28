@@ -11,13 +11,19 @@
     - find_hosts
 
 
-# Shutdown all nodes
+# Shutdown all nodes first
 - name: Shutdown all nodes
-  hosts: all
+  hosts: nodes
   gather_facts: no
   roles:
     - shutdown
   ignore_errors: yes
 
 
+- name: Shutdown master
+  hosts: master
+  gather_facts: no
+  roles:
+    - shutdown
+  ignore_errors: yes
 
