@@ -30,9 +30,7 @@
 
 
 - name: Set up OLED display
-  hosts: #defaultdevices
-    - master
-    - nodes
+  hosts: defaultdevices
   become: yes
   roles:
     - setup-oled
@@ -54,6 +52,8 @@
   roles:
     - install-k3s/general
     - install-k3s/master
+  vars:
+    install_k3s: true
 
 
 - name: Install k3s on nodes

@@ -38,6 +38,7 @@ mac_address_mapping:
 
 # k3s settings
 master_ip: 10.0.0.200
+extra_server_args: "--docker"
 
 
 # Network setup

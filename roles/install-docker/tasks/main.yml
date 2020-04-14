@@ -23,25 +23,27 @@
 # Remove legacy versions of docker
 - name: Removing legacy versions of docker (if any)
   apt:
-    name:
+    name: "{{ item }}"
+    state: absent
+    loop:
       - docker 
       - docker-engine 
       - docker.io 
       - containerd 
       - runc
-    state: absent
 
 
 # Install dependencies
 - name: Installing dependencies
   apt:
-    name:
+    name: "{{ item }}"
+    state: present
+    loop: 
       - apt-transport-https
       - ca-certificates
       - curl
       - software-properties-common
       - gnupg2
-    state: present
 
 
 # Set apt for docker
@@ -85,5 +87,6 @@
 - name: Adding user pi to the docker group
   user:
     name: pi
-    groups: docker
+    groups: 
+      - docker
     append: true

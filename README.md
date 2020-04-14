@@ -41,11 +41,6 @@ I ended up editing the `.git/config` file to match my local ssh url.
 - `git init`: Make a git repository in the currect directory
 
 
-## Generate SSH key
-To be deployed to all of the Raspberry Pi's. As my ssh key is already in place,
-this will be described some other time...
-
-
 ## Ansible
 Ansible will be used for:
 - [x] Set up the raspberry pi:
@@ -117,5 +112,6 @@ are developed:
 - [ ] Start with installing kubernetes
   - At the moment Rancher's k3s is my first to test
   - Check [this out](https://github.com/rancher/k3s)
+- [ ] Add nmap for install on localhost, as it is needed...
   
 

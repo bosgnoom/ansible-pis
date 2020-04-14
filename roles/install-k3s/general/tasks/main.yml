@@ -26,7 +26,22 @@
     state: present
     reload: yes
 
+# https://rancher.com/docs/k3s/latest/en/advanced/#enabling-legacy-iptables-on-raspbian-buster
+- name: Flushing iptables
+  iptables:
+    flush: yes
 
+- name: Set iptables v4
+  alternatives:
+    name: iptables
+    path: /usr/sbin/iptables-legacy
+
+- name: Set iptables v6
+  alternatives:
+    name: ip6tables
+    path: /usr/sbin/ip6tables-legacy
+
+# Back to installing k3s
 - name: Activating cgroup on Raspbian
   lineinfile:
     path: /boot/cmdline.txt
@@ -39,6 +54,7 @@
 
 - name: Rebooting if needed
   reboot:
+    reboot_timeout: 3600
   ignore_errors: true
   when: ( boot_cmdline.changed )
 
