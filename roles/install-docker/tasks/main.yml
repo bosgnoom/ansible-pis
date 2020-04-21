@@ -25,12 +25,12 @@
   apt:
     name: "{{ item }}"
     state: absent
-    loop:
-      - docker 
-      - docker-engine 
-      - docker.io 
-      - containerd 
-      - runc
+  loop:
+    - docker 
+    - docker-engine 
+    - docker.io 
+    - containerd 
+    - runc
 
 
 # Install dependencies
@@ -38,12 +38,12 @@
   apt:
     name: "{{ item }}"
     state: present
-    loop: 
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
-      - gnupg2
+  loop: 
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+    - gnupg2
 
 
 # Set apt for docker

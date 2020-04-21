@@ -1,9 +1,16 @@
 ---
 # Goal:
+# - Double check that nmap is installed
 # - Determine which RPI's are online.
 # - Check if they're freshly flashed (new image) --> defaultdevices
 # - If not, check which one is the master        --> master
 # -         The rest are nodes                   --> nodes
+
+# Install nmap 
+- name: Installing nmap on localhost
+  apt:
+    name: nmap
+    state: present
 
 
 # Include dict of mac_address_mapping
@@ -47,6 +54,7 @@
   when: (item.stdout != "") and
         (mac_address_mapping[item.item.key].name == "master")
   loop: "{{ ip_list.results }}"
+
 
 - name: Find nodes
   add_host:
