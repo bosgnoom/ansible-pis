@@ -18,7 +18,6 @@
     state: present
     reload: yes
 
-
 - name: Enable IPv6 forwarding
   sysctl:
     name: net.ipv6.conf.all.forwarding
@@ -41,7 +40,6 @@
     name: ip6tables
     path: /usr/sbin/ip6tables-legacy
 
-# Back to installing k3s
 - name: Activating cgroup on Raspbian
   lineinfile:
     path: /boot/cmdline.txt
@@ -51,19 +49,18 @@
   when: ( cmdline.stat.path is defined )
   register: boot_cmdline
 
-
 - name: Rebooting if needed
   reboot:
     reboot_timeout: 3600
   ignore_errors: true
   when: ( boot_cmdline.changed )
 
-
 - name: Delete k3s if already present
   file:
     path: /usr/local/bin/k3s
     state: absent
-  when: install_k3s is defined
+  when: install_k3s is true
+
 
 
 
