@@ -17,22 +17,6 @@ Hints for myself:
 
 ## Git 
 
-
-### Multiple repositories
-At the moment I am using both my local git (running on my Synology NAS) and
-my github account to store this work. Git can push to different servers as
-described [here](https://gist.github.com/rvl/c3f156e117e22a25f242). Please 
-remind the next time to create an empty repository on github, otherwise git
-will complain.
-
-```
-git remote set-url --add --push origin git@github.com:xxx/my-project.git
-git remote set-url --add --push origin git@bitbucket.org:yyy/my-project.git
-```
-
-I ended up editing the `.git/config` file to match my local ssh url.
-
-
 ### Git to remember
 - `git status`: Shows which files are changed/untracked
 - `git add .`: Will add all untracked files
@@ -70,17 +54,19 @@ Ansible will be used for:
     - RPI.GPIO
   - Install Adafruit's SSD1306 python driver
   - Show the catz
-- [ ] Prepare for kubernetes:
+- [x] Prepare for kubernetes:
   - cgroup
   - disable swap
   - install docker
-  - ...to be determined...
+
+TODO:
+- [ ] Set up private registry
+  - [ ] Registry
+  - [ ] Generate TLS certificate
+  - [ ] Deploy certificate to all nodes
 
 
 ### Install Ansible
-Currently the Ansible playbooks are developed in Ubuntu 19.04, running in a 
-virtual machine (Virtualbox). 
-
 Installed Ansible by following [these](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-apt-ubuntu) instructions:
 
 ```
@@ -101,7 +87,7 @@ the arp table, which can be used by an user to lookup mac address to ip address.
 ### Run Ansible
 Run Ansible by: `ansible-playbook playbook.yml`. Different playbooks
 are developed:
-- site.yml: main playbook. Will convert a new device to node.
+- site.yml: main playbook. Will convert a new device to either master or node.
 - shutdown.yml: shuts all nodes down
 
 
@@ -109,7 +95,7 @@ are developed:
 - [ ] Develop a python3 script to show node info on OLED
   - Like... ip address, cpu usage, mem stat, ...
   - Start with "stats.py" on boot...
-- [ ] Start with installing kubernetes
+- [x] Start with installing kubernetes
   - At the moment Rancher's k3s is my first to test
   - Check [this out](https://github.com/rancher/k3s)
 - [ ] Add nmap for install on localhost, as it is needed...
