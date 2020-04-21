@@ -16,11 +16,6 @@
     src: /var/lib/rancher/k3s/server/node-token
   register: node_token
 
-# Needed?
-- name: Store Master node-token
-  set_fact: 
-   token: "{{ node_token.content | b64decode | regex_replace('\n', '') }}"
-
 
 - name: Delegating node-token to nodes
   set_fact: 
