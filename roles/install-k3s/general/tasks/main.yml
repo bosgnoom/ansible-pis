@@ -10,7 +10,6 @@
 # Include variables (needed?)
 - include_vars: group_vars/vars.yml
 
-
 - name: Enable IPv4 forwarding
   sysctl:
     name: net.ipv4.ip_forward
@@ -59,7 +58,7 @@
   file:
     path: /usr/local/bin/k3s
     state: absent
-  when: install_k3s is true
+  when: install_k3s
 
 
 

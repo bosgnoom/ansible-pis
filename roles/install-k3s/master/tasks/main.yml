@@ -1,21 +1,19 @@
 ---
+# Install k3s on master
 
 - name: Installing k3s
   shell:
     curl -sfL https://get.k3s.io | sh -
-  when: install_k3s is defined
-
+  when: install_k3s
 
 - name: Wait for node-token
   wait_for:
     path: /var/lib/rancher/k3s/server/node-token
 
-
-- name: Read node-token from master
+- name: Read node-token (from master)
   slurp:
     src: /var/lib/rancher/k3s/server/node-token
   register: node_token
-
 
 - name: Delegating node-token to nodes
   set_fact: 
@@ -23,3 +21,17 @@
   delegate_to: "{{ item }}"
   delegate_facts: true
   with_items: "{{ groups['nodes'] }}"
+
+- name: Use docker as container runtime for server
+  template:
+    src: k3s.service.j2
+    dest: /etc/systemd/system/k3s.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Restarting k3s-server service
+  systemd:
+    name: k3s
+    daemon_reload: yes
+    state: restarted

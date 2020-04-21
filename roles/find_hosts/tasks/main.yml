@@ -6,20 +6,13 @@
 # - If not, check which one is the master        --> master
 # -         The rest are nodes                   --> nodes
 
-# Install nmap 
-- name: Installing nmap on localhost
-  apt:
-    name: nmap
-    state: present
-
-
 # Include dict of mac_address_mapping
 - include_vars: group_vars/vars.yml
 
 
 # Run a ping sweep. All hosts will reply. Hereby the hosts arp cache is filled.
 - name: Run nmap to fill arp cache
-  command: nmap -sP 192.168.178.0/24
+  command: nmap --send-ip -sP 192.168.178.0/24
 
 
 # Check which RPI's are online by checking the arp table for known mac addresses
