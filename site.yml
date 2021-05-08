@@ -1,20 +1,15 @@
 ---
 # Goal:
 # - Determine which RPI's are online.
-# - Check if they're freshly flashed (new image)
-# - If not, check which one is the master
-# -         The rest are nodes
+# - Check if they're freshly flashed (new image), if so, convert it into master/worker node
+# - Install OLED system on each device
+# - Set up k3s on master and workers
 
 - name: Finding hosts
   hosts: localhost
   gather_facts: no
   roles:
     - find_hosts
-
-# Now we have three groups:
-#  - defaultdevices
-#  - master
-#  - nodes
 
 # Apply roles to the found raspberry pi('s)
 - name: Set up freshly flashed devices
@@ -25,13 +20,13 @@
     - setup-pi
   ignore_errors: true
 
-- name: Set up OLED display
-  hosts:
-    - master
-    - nodes
-  become: yes
-  roles:
-    - setup-oled
+# - name: Set up OLED display
+#   hosts:
+#     - master
+#     - nodes
+#   become: yes
+#   roles:
+#     - setup-oled
 
 # - name: Install k3s on master
 #   hosts:
