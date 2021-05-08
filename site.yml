@@ -1,73 +1,54 @@
 ---
-
 # Goal:
 # - Determine which RPI's are online.
 # - Check if they're freshly flashed (new image)
 # - If not, check which one is the master
 # -         The rest are nodes
 
-
 - name: Finding hosts
   hosts: localhost
-  become: yes
   gather_facts: no
   roles:
     - find_hosts
 
-
 # Now we have three groups:
 #  - defaultdevices
 #  - master
-#  - nodes 
-
+#  - nodes
 
 # Apply roles to the found raspberry pi('s)
 - name: Set up freshly flashed devices
   hosts: defaultdevices
+  ignore_unreachable: yes
   become: yes
-  roles: 
+  roles:
     - setup-pi
   ignore_errors: true
 
-
 - name: Set up OLED display
-  hosts: defaultdevices
+  hosts:
+    - master
+    - nodes
   become: yes
   roles:
     - setup-oled
 
+# - name: Install k3s on master
+#   hosts:
+#     - master
+#   become: yes
+#   roles:
+#     - install-k3s/general
+#     - install-k3s/master
+#   vars:
+#     install_k3s: false
 
-- name: Install Docker
-  hosts: 
-    - master
-    - nodes
-  become: yes
-  roles:
-    - install-docker
-
-
-- name: Install k3s on master
-  hosts: 
-    - master
-  become: yes
-  roles:
-    - install-k3s/general
-    - install-k3s/master
-  vars:
-    install_k3s: false
-
-
-- name: Install k3s on nodes
-  hosts: 
-    - nodes
-  become: yes
-  roles:
-    - install-k3s/general
-    - install-k3s/node
-  vars:
-    install_k3s: false
-
-
-    
-        
-    
+# - name: Install k3s on nodes
+#   hosts:
+#     - nodes
+#   become: yes
+#   roles:
+#     - install-k3s/general
+#     - install-k3s/node
+#   vars:
+#     install_k3s: false

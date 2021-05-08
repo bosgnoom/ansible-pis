@@ -29,13 +29,11 @@ require dhcp_server_identifier
 slaac private
 
 # Now here the static IP configuration:
-interface {{ node_iface }}
+interface eth0
     static ip_address={{ node_ip_address }}/24
     static routers={{ dhcpcd_routers }}
     static domain_name_servers={{ dhcpcd_domain_name_servers }}
 
-interface eth0
-    static ip_address={{ node_ip_address_2 }}/24
 
 
 

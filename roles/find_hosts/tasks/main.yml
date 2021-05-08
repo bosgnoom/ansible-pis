@@ -9,18 +9,15 @@
 # Include dict of mac_address_mapping
 - include_vars: group_vars/vars.yml
 
-
 # Run a ping sweep. All hosts will reply. Hereby the hosts arp cache is filled.
 - name: Run nmap to fill arp cache
   command: nmap --send-ip -sP 192.168.178.0/24
-
 
 # Check which RPI's are online by checking the arp table for known mac addresses
 - name: Check mac_address_mapping for online RPI's
   command: awk '{ if (toupper($4) == toupper("{{ item.key }}")) print $1 }' /proc/net/arp
   register: ip_list
   loop: "{{ mac_address_mapping | dict2items }}"
-
 
 # Analyze results. Sort hosts into defaultdevices, master or node
 - name: Find defaultdevices
@@ -34,9 +31,8 @@
     ansible_user: pi
     ansible_ssh_pass: raspberry
   when: (item.stdout != "") and
-        (item.stdout != mac_address_mapping[item.item.key].ip)
+    (item.stdout != mac_address_mapping[item.item.key].ip)
   loop: "{{ ip_list.results }}"
-
 
 - name: Find master node
   add_host:
@@ -45,9 +41,8 @@
       - master
     ansible_user: pi
   when: (item.stdout != "") and
-        (mac_address_mapping[item.item.key].name == "master")
+    (mac_address_mapping[item.item.key].name == "master")
   loop: "{{ ip_list.results }}"
-
 
 - name: Find nodes
   add_host:
@@ -56,7 +51,5 @@
       - nodes
     ansible_user: pi
   when: (item.stdout != "") and
-        (mac_address_mapping[item.item.key].name != "master")
+    (mac_address_mapping[item.item.key].name != "master")
   loop: "{{ ip_list.results }}"
-
- 

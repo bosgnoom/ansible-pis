@@ -1,44 +1,37 @@
 ---
-# Set up a raspberry pi. 
-# This assumes a freshly flashed raspberry pi, with the only addition of 
-# the 'ssh' file in the /boot partition (and wpa_supplicant.conf)
+# Set up a raspberry pi.
+# This assumes a freshly flashed raspberry pi,
+# with the only addition of the 'ssh' file in the /boot partition
 
-
-# First, check which node we're talking to
 - include_vars: group_vars/vars.yml
 
-
+# First, check which node we're talking to
 - name: Check target MAC address
   set_fact:
-    node_mac_address: '{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress|upper }}' 
-
+    node_mac_address: "{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress|upper }}"
 
 - name: Look up target hostname, network interface and ip address
   set_fact:
     node_hostname: "{{ mac_address_mapping[node_mac_address].name }}"
     node_ip_address: "{{ mac_address_mapping[node_mac_address].ip }}"
-    node_ip_address_2: "{{ mac_address_mapping[node_mac_address].ip_2 }}"
-    node_iface: "{{ mac_address_mapping[node_mac_address].iface }}"
-
 
 # Now set up the node
-# Install extra packages                      
+# Install extra packages
 - name: Install needed packages
-  apt: 
+  apt:
     update_cache: yes
     cache_valid_time: 3600
     name: "{{ packages }}"
   vars:
-    packages: 
-    - python-apt
-    - mc
-    - python-pexpect  # Needed to change node password
-    - screen
-    - build-essential
-    - git
-    - aptitude
-    
-    
+    packages:
+      - python-apt
+      - mc
+      - python-pexpect # Needed to change node password
+      - screen
+      - build-essential
+      - git
+      - aptitude
+
 # Change password
 - name: Change password
   expect:
@@ -49,9 +42,8 @@
 # Deploy SSH key to log in without password
 - name: Deploy SSH key
   authorized_key: user=pi
-                  key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-                  state=present
-       
+    key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    state=present
 
 # Change settings (normally via raspi-config):
 # - GPU memory
@@ -61,11 +53,9 @@
     regexp: "^gpu_mem="
     line: "gpu_mem=16M"
 
-
 # - boot CLI
 - name: Set to boot at CLI (1/2)
   command: "systemctl set-default multi-user.target"
-
 
 - name: Set to boot at CLI (2/2)
   file:
@@ -73,37 +63,31 @@
     dest: "/etc/systemd/system/getty.target.wants/getty@tty1.service"
     state: link
     force: 1
-    
 
 # - change timezone
 - name: Remove old timezone
   file: path='/etc/localtime' state=absent
 
-
 - name: Set new timezone
   command: "echo 'Europe/Amsterdam' > /etc/timezone"
-
 
 - name: Run dpkg-reconfigure
   command: "dpkg-reconfigure -f noninteractive tzdata"
 
-
 # - set locale
 - name: Remove GB locale
-  lineinfile: 
+  lineinfile:
     path: /etc/locale.gen
-    regex: 'en_GB.UTF-8 UTF-8'
-    line: '#en_GB.UTF-8 UTF-8'
-
+    regex: "en_GB.UTF-8 UTF-8"
+    line: "#en_GB.UTF-8 UTF-8"
 
 - name: Enable {{ node_locale }}
-  lineinfile: 
+  lineinfile:
     path: /etc/locale.gen
-    regex: '^# {{ node_locale }}'
-    line: '{{ node_locale }}'
+    regex: "^# {{ node_locale }}"
+    line: "{{ node_locale }}"
 
-
-- name: Update default locale 
+- name: Update default locale
   template:
     src: locale.j2
     dest: /etc/default/locale
@@ -111,58 +95,55 @@
     group: root
     mode: 0644
 
-
 - name: Run dpkg-reconfigure
   command: dpkg-reconfigure -f noninteractive locales
 
-
 # - Set hostname
-- name: 'Set hostname'
+- name: "Set hostname"
   hostname:
-    name: '{{ node_hostname }}'
+    name: "{{ node_hostname }}"
 
+- name: "Change /etc/hostname"
+  command: "echo {{ node_hostname }} > /etc/hostname"
 
-- name: 'Change /etc/hostname'
-  command: 'echo {{ node_hostname }} > /etc/hostname'
-
-
-- name: 'Set hostname in /etc/hosts'
+- name: "Set hostname in /etc/hosts"
   lineinfile:
     path: /etc/hosts
     regexp: '^127\.0\.1\.1'
-    line: '127.0.1.1 {{ node_hostname }}'
-    
-    
-# Set up a fixed ip address                  
-- name: 'Set a fixed ip address'
+    line: "127.0.1.1 {{ node_hostname }}"
+
+# Set up a fixed ip address
+- name: "Set a fixed ip address"
   template:
     src: dhcpcd.conf.j2
     dest: /etc/dhcpcd.conf
     owner: root
     group: netdev
     mode: 664
-    
-    
+
+# Set up wifi settings (wpa_supplicant.conf)
+- name: "Setting wpa_supplicant.conf"
+  template:
+    src: wpa_supplicant.conf.j2
+    dest: /etc/wpa_supplicant/wpa_supplicant.conf
+    owner: root
+    group: root
+    mode: 600
+
 # Finally, reboot and wait for the node to come back online
-- name: 'Reboot'
+- name: "Reboot"
   shell: 'sleep 2 && shutdown -r now "Reboot triggered by Ansible" && sleep 2'
   async: 1
   poll: 0
   become: true
   ignore_errors: true
 
-
 # Look for node_hostname, as the host has now a new name/ip address
-- name: 'Wait for host to boot'
+- name: "Wait for host to boot"
   become: false
   local_action:
     module: wait_for
       host={{ node_ip_address }}
       port=22
-      delay=15
+      delay=30
       timeout=60
-
-
-
-
-

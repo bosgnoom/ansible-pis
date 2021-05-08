@@ -4,52 +4,34 @@
 
 # Next to that, also the default node locale and language is configured here
 
-
 mac_address_mapping:
-  "B8:27:EB:EC:85:F8":
+  "B8:27:EB:2C:37:25":
+    name: "node0"
+    ip: "192.168.178.201"
+
+  "B8:27:EB:59:F7:3E":
+    name: "node1"
+    ip: "192.168.178.202"
+
+  "B8:27:EB:B9:D0:AD":
     name: "master"
     ip: "192.168.178.200"
-    ip_2: "10.0.0.200"
-    iface: wlan0
-
-  "B8:27:EB:0C:A2:6B":
-    name: "node1"
-    ip: "192.168.178.201"
-    ip_2: "10.0.0.201"
-    iface: wlan0
-
-  "B8:27:EB:79:62:70":
-    name: "node2"
-    ip: "192.168.178.202"
-    ip_2: "10.0.0.202"
-    iface: wlan0
-
-  "B8:27:EB:E3:9D:A9":
-    name: "node3"
-    ip: "192.168.178.203"
-    ip_2: "10.0.0.203"
-    iface: wlan0
-
-  "A0:F3:C1:08:DC:94":
-    name: "node4"
-    ip: "192.168.178.204"
-    ip_2: "10.0.0.204"
-    iface: wlan0
 
 # k3s settings
-master_ip: 10.0.0.200
-extra_server_args: "--docker"
-
+master_ip: 192.168.178.200
 
 # Network setup
 dhcpcd_routers: 192.168.178.1
 dhcpcd_domain_name_servers: 192.168.178.1
 
-
+# Raspberry pi password
 # Will be replaced into ansible-secret
 node_password: "schouten"
-
 
 # Set the default locale and language
 node_locale: "en_US.UTF-8 UTF-8"
 node_language: "en_US.UTF-8"
+
+# WiFi settings
+wifi_ssid: "Twaalf-2.4"
+wifi_password: "PaulenSanne123"
