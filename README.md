@@ -43,7 +43,7 @@ Ansible will be used for:
     - set dns nameserver (/etc/resolv.conf)
   - Change the GPU memory size to minimum (16MB)
   - Set the timezone
-- [x] Set up the OLED display:
+- [?] Set up the OLED display:
   - Enable i2c (for the OLED display)
   - Install needed packages (apt)
     - python-dev
@@ -54,16 +54,13 @@ Ansible will be used for:
     - RPI.GPIO
   - Install Adafruit's SSD1306 python driver
   - Show the catz
-- [x] Prepare for kubernetes:
+- [?] Prepare for kubernetes:
   - cgroup
   - disable swap
-  - install docker
 
 TODO:
 - [ ] Set up private registry
   - [ ] Registry
-  - [ ] Generate TLS certificate
-  - [ ] Deploy certificate to all nodes
 
 
 ### Install Ansible
@@ -99,5 +96,7 @@ are developed:
   - At the moment Rancher's k3s is my first to test
   - Check [this out](https://github.com/rancher/k3s)
 - [ ] Add nmap for install on localhost, as it is needed...
-  
+
+When setting up new devices:
+- Ansible needs ```export ANSIBLE_HOST_KEY_CHECKING=False```
 
