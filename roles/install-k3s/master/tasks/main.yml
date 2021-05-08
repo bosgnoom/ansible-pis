@@ -22,14 +22,6 @@
   delegate_facts: true
   with_items: "{{ groups['nodes'] }}"
 
-- name: Use docker as container runtime for server
-  template:
-    src: k3s.service.j2
-    dest: /etc/systemd/system/k3s.service
-    owner: root
-    group: root
-    mode: 0644
-
 - name: Restarting k3s-server service
   systemd:
     name: k3s

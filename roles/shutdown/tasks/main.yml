@@ -1,10 +1,7 @@
 ---
-
 # Shutdown k3s
 - name: Stopping k3s...
-  command:
-    /usr/local/bin/k3s-killall.sh
-
+  command: /usr/local/bin/k3s-killall.sh
 
 # Shut down all of the raspberry pi's
 - name: Shutdown

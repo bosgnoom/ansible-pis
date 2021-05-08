@@ -11,7 +11,6 @@
   roles:
     - find_hosts
 
-# Apply roles to the found raspberry pi('s)
 - name: Set up freshly flashed devices
   hosts: defaultdevices
   ignore_unreachable: yes
@@ -28,22 +27,22 @@
 #   roles:
 #     - setup-oled
 
-# - name: Install k3s on master
-#   hosts:
-#     - master
-#   become: yes
-#   roles:
-#     - install-k3s/general
-#     - install-k3s/master
-#   vars:
-#     install_k3s: false
+- name: Install k3s on master
+  hosts:
+    - master
+  become: yes
+  roles:
+    - install-k3s/general
+    - install-k3s/master
+  vars:
+    install_k3s: false
 
-# - name: Install k3s on nodes
-#   hosts:
-#     - nodes
-#   become: yes
-#   roles:
-#     - install-k3s/general
-#     - install-k3s/node
-#   vars:
-#     install_k3s: false
+- name: Install k3s on nodes
+  hosts:
+    - nodes
+  become: yes
+  roles:
+    - install-k3s/general
+    - install-k3s/node
+  vars:
+    install_k3s: true

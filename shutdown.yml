@@ -1,15 +1,12 @@
 ---
-
 # Goal:
 # - Shutdown all RPi's
-
 
 - name: Finding hosts
   hosts: localhost
   gather_facts: no
   roles:
     - find_hosts
-
 
 # Shutdown all nodes first
 - name: Shutdown all nodes
@@ -19,11 +16,9 @@
     - shutdown
   ignore_errors: yes
 
-
 - name: Shutdown master
   hosts: master
   gather_facts: no
   roles:
     - shutdown
   ignore_errors: yes
-

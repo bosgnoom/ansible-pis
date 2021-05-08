@@ -25,7 +25,7 @@
 # Analyze results from ping sweep. Unexpected ip address is a default device
 - name: Finding defaultdevices
   add_host:
-    name: "{{ item.stdout }}"
+    name: "{{ item.stdout.split('\n', 1)[0] }}"
     groups:
       - defaultdevices
     # TODO: move these to a proper location (https://docs.ansible.com/ansible/2.3/playbooks_best_practices.html#best-practices-for-variables-and-vaults)

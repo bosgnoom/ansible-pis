@@ -3,7 +3,6 @@
 # This is connected through i2c
 # and supported by Adafruit's ssd1306 package
 
-
 - name: Activate I2C in config.txt
   lineinfile:
     path: /boot/config.txt
@@ -11,59 +10,48 @@
     line: "dtparam=i2c_arm=on"
   become: yes
 
-    
 - name: Activate I2C in /etc/modules
   lineinfile:
     path: /etc/modules
     line: "i2c-dev"
-  become: yes  
-  
+  become: yes
 
 - name: Install needed packages
-  apt: 
+  apt:
     update_cache: yes
     cache_valid_time: 3600
     name: "{{ packages }}"
   vars:
-    packages: 
-    - python-pip
-    - python-setuptools
-    - python-dev
-    - libjpeg-dev
-    - libpng-dev
-    - libfreetype6-dev
-    - python-smbus
-    
+    packages:
+      - python-pip
+      - python-setuptools
+      - python-dev
+      - libjpeg-dev
+      - libpng-dev
+      - libfreetype6-dev
+      - python-smbus
 
 # Reboot (to activate i2c)
 - name: Reboot
   reboot:
     reboot_timeout: 300
 
-
 # Following https://github.com/adafruit/Adafruit_Python_SSD1306
 - name: Installing pip modules
   pip:
     name: pip, setuptools, wheel, pillow
-    extra_args: "--upgrade" 
-
+    extra_args: "--upgrade"
 
 - name: Cloning Adafruit_Python_SSD1306
   git:
-    repo: "https://github.com/adafruit/Adafruit_Python_SSD1306.git" 
+    repo: "https://github.com/adafruit/Adafruit_Python_SSD1306.git"
     dest: "~/Adafruit_Python_SSD1306"
   become: yes
-  become_user: pi  
+  become_user: pi
 
-   
 - name: "Run setup.py"
   command: chdir=/home/pi/Adafruit_Python_SSD1306 python setup.py install
   become: yes
-  
-    
+
 - name: "Test run OLED"
   command: chdir=/home/pi/Adafruit_Python_SSD1306/examples python image.py
-  #become: yes
-    
-    
- 
